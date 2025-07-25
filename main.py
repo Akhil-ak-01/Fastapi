@@ -23,7 +23,8 @@ def read_root():
     return L
 @app.post("/post_list/")
 def read_root():
-    return {"Hello":"AK"}
+    return L
+    
 
 @app.get("/")
 def read_root():
