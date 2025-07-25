@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FastAPI List Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <h2>FastAPI List Manager</h2>
+
+  <div class="container">
+    <input type="text" id="itemInput" placeholder="Enter item to add">
+    <br>
+    <button class="add-btn" onclick="addItem()">➕ Add to List</button>
+    <button class="view-btn" onclick="viewList()">📃 View List</button>
+
+    <ul id="listDisplay"></ul>
+  </div>
+
+  <script>
+  async function addItem() {
+    const item = document.getElementById("itemInput").value;
+    if (!item.trim()) {
+      alert("Please enter a valid item.");
+      return;
+    }
+
+    // Get current list to determine next key
+    const resList = await fetch("http://127.0.0.1:8000/get_list/");
+    const currentList = await resList.json();
+    const keys = Object.keys(currentList);
+    const nextKey = keys.length ? (Math.max(...keys.map(Number)) + 1).toString() : "1";
+
+    // Send POST request to FastAPI
+    const res = await fetch("http://127.0.0.1:8000/post_list/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ key: nextKey, value: item })
+    });
+
+    const result = await res.json();
+    alert(result.message || "Item added!");
+    document.getElementById("itemInput").value = "";
+    viewList(); // Refresh the list after adding
+  }
+
+  async function viewList() {
+    const res = await fetch("http://127.0.0.1:8000/get_list/");
+    const result = await res.json();
+
+    const listDisplay = document.getElementById("listDisplay");
+    listDisplay.innerHTML = "";
+
+    Object.values(result).forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      listDisplay.appendChild(li);
+    });
+  }
+</script>
+</body>
+</html>

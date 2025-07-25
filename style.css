@@ -1,0 +1,44 @@
+/* === Base Styles === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #4f12dc, #e9e4f0);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* === Main Container === */
+.container {
+  background-color: #5ba19b;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+/* === Header === */
+h2 {
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 25px;
+}
+
+/* === Input Field === */
+input[type="text"] {
+  padding: 14px 16px;
+  width: 100%;
+  font-size: 16px;
+  border: 2px solid #180606;
+  border-radius: 12px;
+  transition: 0.3s;
+}
