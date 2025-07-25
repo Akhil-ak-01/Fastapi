@@ -19,11 +19,18 @@ L = {
     "4":"DATE"
 }
 @app.get("/get_list/")
-def read_root():
+def get_list():
     return L
+
 @app.post("/post_list/")
-def read_root():
-    return L
+async def post_list(request: Request):
+    data = await request.json()
+    key = data.get("key")
+    value = data.get("value")
+    if key and value:
+        L[key] = value
+        return {"message": "Item added!", "list": L}
+    return {"error": "Missing key or value"}
     
 
 @app.get("/")
